@@ -124,6 +124,8 @@ return {
 
     local elixirls_options = { cmd = { "/home/marul/.local/share/nvim/mason/bin/elixir-ls" } }
 
+    local clarinet_options = { cmd = { "/home/marul/.local/share/nvim/mason/bin/clarinet" } }
+
     local servers = {
       vuels = {},
       texlab = {},
@@ -143,6 +145,7 @@ return {
       omnisharp = omnisharp_options,
       solidity_ls_nomicfoundation = {},
       elixirls = elixirls_options,
+      clarinet = {},
     }
 
     for lsp in pairs(servers) do

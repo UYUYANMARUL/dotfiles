@@ -62,10 +62,6 @@ M.general = {
     -- ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
     -- ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
 
-    -- new buffer
-    ["<leader>b"] = { "<cmd> enew <CR>", "New buffer" },
-    ["<leader>ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
-
     ["<leader>fm"] = {
       function()
         vim.lsp.buf.format({ async = true })
@@ -118,32 +114,24 @@ M.harpoon = {
   },
 }
 
-M.tabufline = {
+M.buffline = {
 
   n = {
-    ["<leader>h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-    -- cycle through buffers
-    ["<tab>"] = {
-      function()
-        require("nvchad.tabufline").tabuflineNext()
-      end,
-      "Goto next buffer",
-    },
+    ["<leader>bb"] = { "<cmd>BufferLineCyclePrev<CR>", "Previous" },
 
-    ["<S-tab>"] = {
-      function()
-        require("nvchad.tabufline").tabuflinePrev()
-      end,
-      "Goto prev buffer",
-    },
+    ["<leader>bn"] = { "<cmd>BufferLineCycleNext<CR>", "Next" },
 
-    -- close buffer + hide terminal buffer
-    ["<leader>x"] = {
-      function()
-        require("nvchad.tabufline").close_buffer()
-      end,
-      "Close buffer",
-    },
+    ["<leader>bj"] = { "<cmd>BufferLineGoToBuffer<CR>", "jump" },
+
+    ["<leader>bh"] = { "<cmd>BufferLineCloseLeft<CR>", "Close all to the left" },
+
+    ["<leader>bl"] = { "<cmd>BufferLineCloseRight<CR>", "Close all to the right" },
+
+    ["<leader>be"] = { "<cmd>BufferLinePickClose<CR>", "No Highlight" },
+
+    ["<leader>bp"] = { "<cmd>BufferLinePick<CR>", "Pick Buffer" },
+
+    ["<leader>c"] = { "<cmd>BufferKill<CR>", "Close buffer" },
   },
 }
 
@@ -310,7 +298,6 @@ M.telescope = {
 
   n = {
     -- find
-    ["<leader>f"] = { "", "Find" },
     ["<leader>ff"] = { "<cmd> Telescope find_files <CR>", "Find files" },
     ["<leader>fa"] = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "Find all" },
     ["<leader>fw"] = { "<cmd> Telescope live_grep <CR>", "Live grep" },
@@ -320,7 +307,7 @@ M.telescope = {
     ["<leader>fz"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" },
 
     -- git
-    ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
+    -- ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
     ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
 
     -- pick a hidden term
@@ -414,27 +401,6 @@ M.whichkey = {
         vim.cmd("WhichKey " .. input)
       end,
       "Which-key query lookup",
-    },
-  },
-}
-
-M.blankline = {
-
-  n = {
-    ["<leader>cc"] = {
-      function()
-        local ok, start = require("indent_blankline.utils").get_current_context(
-          vim.g.indent_blankline_context_patterns,
-          vim.g.indent_blankline_use_treesitter_scope
-        )
-
-        if ok then
-          vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-          vim.cmd([[normal! _]])
-        end
-      end,
-
-      "Jump to current context",
     },
   },
 }

@@ -138,3 +138,5 @@ export VCPKG_ROOT=/home/linuxbrew/.linuxbrew/bin/
 export PATH=$VCPKG_ROOT:$PATH
 export PATH="$PATH:/home/marul/.foundry/bin"
 eval "$(zoxide init --cmd cd bash)"
+alias ls="exa"
+alias cat="bat"
