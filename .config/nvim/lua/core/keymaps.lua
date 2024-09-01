@@ -313,10 +313,17 @@ M.telescope = {
     -- pick a hidden term
     ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
 
-    -- theme switcher
-    ["<leader>th"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
-
     ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
+  },
+}
+
+M.fold = {
+  n = {
+    ["zo"] = { "<cmd>foldopen<CR>", "Open Folded Code" },
+    ["zf"] = { "<cmd>foldclose<CR>", "Fold Code" },
+    ["za"] = { "za", "Toogle Fold" },
+    ["zO"] = { "zR", "Open All Folded Code" },
+    ["zF"] = { "zM", "Fold Code" },
   },
 }
 

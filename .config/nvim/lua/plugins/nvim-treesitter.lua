@@ -40,6 +40,8 @@ return {
           "gitignore",
           "rust",
           "latex",
+          "tact",
+          "func",
         },
         -- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
         ts_context_commentstring = {

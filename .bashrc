@@ -114,6 +114,8 @@ fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+eval "$(oh-my-posh init bash)"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
@@ -137,6 +139,7 @@ export DOTNET_ROOT=usr/bin/dotnet
 export VCPKG_ROOT=/home/linuxbrew/.linuxbrew/bin/
 export PATH=$VCPKG_ROOT:$PATH
 export PATH="$PATH:/home/marul/.foundry/bin"
+export PATH=$PATH:~/.cargo/bin/
 eval "$(zoxide init --cmd cd bash)"
 alias ls="exa"
 alias cat="bat"

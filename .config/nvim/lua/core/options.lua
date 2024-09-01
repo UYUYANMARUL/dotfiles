@@ -41,3 +41,12 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+--fold options
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
+-- vim.opt.fillchars = "fold:."
+vim.opt.foldnestmax = 20
+vim.opt.foldminlines = 1
+vim.opt.foldlevel = 999

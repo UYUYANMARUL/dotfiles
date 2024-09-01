@@ -3,7 +3,6 @@ vim.keymap.set("n", "<c-z>", "<nop>")
 vim.g.mapleader = " "
 
 local vim = vim
-local opt = vim.opt
 
 local buff = vim.api.nvim_get_current_buf()
 local path = vim.api.nvim_buf_get_name(buff)
@@ -25,17 +24,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     vim.cmd([[e!]])
   end,
 })
-
---
-
---
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) ]]
-vim.opt.fillchars = "fold:."
-vim.opt.foldnestmax = 3
-vim.opt.foldminlines = 1
-vim.opt.foldlevel = 999
 
 require("lazyy")
 require("core")
