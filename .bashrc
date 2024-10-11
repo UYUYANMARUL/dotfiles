@@ -141,5 +141,5 @@ export PATH=$VCPKG_ROOT:$PATH
 export PATH="$PATH:/home/marul/.foundry/bin"
 export PATH=$PATH:~/.cargo/bin/
 eval "$(zoxide init --cmd cd bash)"
-alias ls="exa"
+alias ls="lsd"
 alias cat="bat"
