@@ -55,6 +55,8 @@ return {
       end
     end
 
+
+
     -- Get list of windows IDs with the buffer to close
     local windows = vim.tbl_filter(function(win)
       return api.nvim_win_get_buf(win) == bufnr

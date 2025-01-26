@@ -23,7 +23,6 @@ setopt APPEND_HISTORY
 # Window Size Check
 # ------------------------------
 # zsh automatically checks window size, but to ensure:
-setopt CHECK_WIN
 
 # ------------------------------
 # Chroot Identification
@@ -105,7 +104,7 @@ compinit
 # Homebrew Environment
 # ------------------------------
 if type brew &>/dev/null; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # ------------------------------
@@ -129,6 +128,9 @@ export PATH="$PATH:$HOME/dotnet"
 
 # Uncomment if needed
 # export PATH="/home/linuxbrew/.linuxbrew/bin/dotnet"
+#
+export PATH="$PATH:$HOME/.config/emacs/bin"
+
 
 export DOTNET_ROOT=/usr/bin/dotnet
 
@@ -144,4 +146,20 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 fi
 
 # Initialize zoxide for directory navigation
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+alias icat="kitten icat"
+export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib:$(brew --prefix)/opt/libiconv/lib
+export PATH="/opt/homebrew/opt/libiconv/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/libiconv/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libiconv/include"
+
+
+export PATH="$PATH:/Users/ataberkcekic/.risc0/bin"
+export PATH="/opt/homebrew/opt/dotnet@6/bin:$PATH"
+export PATH="/opt/homebrew/opt/dotnet@6/bin:$PATH"
+export PATH="/opt/homebrew/opt/dotnet@8/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+

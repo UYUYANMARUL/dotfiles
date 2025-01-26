@@ -143,3 +143,9 @@ export PATH=$PATH:~/.cargo/bin/
 eval "$(zoxide init --cmd cd bash)"
 alias ls="lsd"
 alias cat="bat"
+alias icat="kitten icat"
+export PATH="$PATH:/Users/ataberkcekic/.risc0/bin"
+export PATH="/opt/homebrew/opt/libiconv/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/libiconv/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libiconv/include"
+

@@ -178,7 +178,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-t = 'layout floating tiling'
 
 # alt-enter = 'exec-and-forget kitty'
-alt-enter = 'exec-and-forget kitty'
+alt-enter = 'exec-and-forget ghostty'
 
 alt-shift-q = 'close --quit-if-last-window'
 

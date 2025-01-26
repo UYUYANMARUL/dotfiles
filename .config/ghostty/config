@@ -1,0 +1,13 @@
+# The syntax is "key = value". The whitespace around the
+# equals doesn't matter.
+background = 282c34
+foreground = ffffff
+
+# Comments start with a `#` and are only valid on their own line.
+# Blank lines are ignored!
+
+keybind = ctrl+a=open_config
+# Empty values reset the configuration to the default value
+font-size = 15
+font-family-bold = "Mononoki Nerd Font Mono"
+font-thicken = true

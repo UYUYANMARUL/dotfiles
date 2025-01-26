@@ -122,7 +122,7 @@ return {
 
     local omnisharp_options = { cmd = { "/home/marul/.local/share/nvim/mason/bin/omnisharp" } }
 
-    local elixirls_options = { cmd = { "/home/marul/.local/share/nvim/mason/bin/elixir-ls" } }
+    local elixirls_options = { cmd = { "/run/current-system/sw/bin/elixir-ls" } }
 
     local clarinet_options = { cmd = { "/home/marul/.local/share/nvim/mason/bin/clarinet" } }
 

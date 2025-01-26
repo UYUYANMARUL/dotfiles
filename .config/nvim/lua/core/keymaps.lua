@@ -19,6 +19,16 @@ vim.keymap.set("v", "<A-j>", [[:m '>+1<CR>gv=gv]], { noremap = true })
 
 vim.keymap.set("v", "<A-k>", [[:m '<-2<CR>gv=gv]], { noremap = true })
 
+vim.keymap.set('n', '<up>', '<nop>')
+vim.keymap.set('n', '<down>', '<nop>')
+vim.keymap.set('i', '<up>', '<nop>')
+vim.keymap.set('i', '<down>', '<nop>')
+vim.keymap.set('i', '<left>', '<nop>')
+vim.keymap.set('i', '<right>', '<nop>')
+-- let the left and right arrows be useful: they can switch buffers
+vim.keymap.set('n', '<left>', ':bp<cr>')
+vim.keymap.set('n', '<right>', ':bn<cr>')
+
 -- use jk to exit insert mode
 local M = {}
 
@@ -43,24 +53,10 @@ M.general = {
 
     -- save
     ["<leader>w"] = { "<cmd> w <CR>", "Save" },
-
+    -- close
     ["<leader>q"] = { "<cmd> q <CR>", "Close" },
-
     -- Copy all
     ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
-
-    -- line numbers
-    ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
-    ["<leader>rn"] = { "<cmd> set rnu! <CR>", "Toggle relative number" },
-
-    -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
-    -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
-    -- empty mode is same as using <cmd> :map
-    -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
-    -- ["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
-    -- ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    -- ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    -- ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
 
     ["<leader>fm"] = {
       function()
@@ -75,24 +71,17 @@ M.general = {
   },
 
   v = {
-    -- ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    -- ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
     ["<"] = { "<gv", "Indent line" },
     [">"] = { ">gv", "Indent line" },
   },
 
   x = {
-    -- ["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
-    -- ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    -- Don't copy the replaced text after pasting in visual mode
-    -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
     ["p"] = { 'p:let @+=@0<CR>:let @"=@0<CR>', "Dont copy replaced text", opts = { silent = true } },
   },
 }
 
 M.tmux_navigator = {
   n = {
-
     ["<C-h>"] = { "<cmd><C-U>TmuxNavigateLeft<cr>" },
     ["<C-j>"] = { "<cmd><C-U>TmuxNavigateDown<cr>" },
     ["<C-k>"] = { "<cmd><C-U>TmuxNavigateUp<cr>" },
@@ -103,15 +92,23 @@ M.tmux_navigator = {
 
 M.harpoon = {
   n = {
+    ["<leader>hm"] = { require('harpoon').add_file, "Mark file with harpoon" },
 
-    ["<leader>hm"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Mark file with harpoon" },
+    ["<leader>hn"] = { require('harpoon').nav_next, "Go to next harpoon mark" },
 
-    ["<leader>hn"] = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "Go to next harpoon mark" },
+    ["<leader>hp"] = { require('harpoon').nav_prev, "Go to previous harpoon mark" },
 
-    ["<leader>hp"] = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "Go to previous harpoon mark" },
-
-    ["<leader>ha"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Show harpoon marks" },
+    ["<leader>ha"] = { require('harpoon').toggle_quick_menu, "Show harpoon marks" },
   },
+}
+
+M.oil = {
+n = {
+    ["<leader>j"] = { require('oil').toggle_float, "Toogle Oil File Manager" },
+
+    ["-"] = { "<cmd>Oil<cr>", "Open Oil File Manager" },
+  },
+
 }
 
 M.buffline = {
@@ -136,8 +133,6 @@ M.buffline = {
 }
 
 M.comment = {
-
-  -- toggle comment in both modes
   n = {
     ["<leader>/"] = {
       function()
@@ -156,9 +151,6 @@ M.comment = {
 }
 
 M.lspconfig = {
-
-  -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
-
   n = {
 
     ["gD"] = {
@@ -288,9 +280,6 @@ M.nvimtree = {
   n = {
     -- toggle
     ["<leader>e"] = { "<cmd> NvimTreeToggle <CR>", "Toggle nvimtree" },
-
-    -- focus
-    -- ["<leader>e"] = { "<cmd> NvimTreeFocus <CR>", "Focus nvimtree" },
   },
 }
 
@@ -305,14 +294,9 @@ M.telescope = {
     ["<leader>fh"] = { "<cmd> Telescope help_tags <CR>", "Help page" },
     ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "Find oldfiles" },
     ["<leader>fz"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" },
-
-    -- git
-    -- ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
+    ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
     ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
-
-    -- pick a hidden term
     ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
-
     ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
   },
 }
@@ -376,20 +360,6 @@ M.nvterm = {
       "Toggle vertical term",
     },
 
-    -- new
-    -- ["<leader>h"] = {
-    --   function()
-    --     require("nvterm.terminal").new "horizontal"
-    --   end,
-    --   "New horizontal term",
-    -- },
-    --
-    -- ["<leader>v"] = {
-    --   function()
-    --     require("nvterm.terminal").new "vertical"
-    --   end,
-    --   "New vertical term",
-    -- },
   },
 }
 
@@ -504,13 +474,10 @@ M.floatterminal = {
   n = {
 
     ["<C-\\>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
-
     ["<C-z>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
   },
   t = {
-
     ["<C-\\>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
-
     ["<C-z>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
   },
 }

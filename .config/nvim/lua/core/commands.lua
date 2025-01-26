@@ -14,7 +14,7 @@ M.defaults = {
   {
     name = "BufferKill",
     fn = function()
-      require("lua.plugins.bufferline").buf_kill("bd")
+      require("plugins.bufferline").buf_kill("bd")
       vim.cmd('echo "buffer killed"')
     end,
   },
