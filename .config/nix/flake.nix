@@ -28,6 +28,7 @@
             stow
             lsd
             git
+            lazygit
             curl
             syncthing
             obsidian
