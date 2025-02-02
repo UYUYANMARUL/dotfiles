@@ -21,6 +21,7 @@
             neovim
             mkalias
             tmux
+            zellij
             kitty
             alacritty
             oh-my-posh

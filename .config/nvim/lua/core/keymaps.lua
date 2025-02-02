@@ -216,12 +216,18 @@ M.lspconfig = {
       "LSP references",
     },
 
-    -- ["<leader>f"] = {
-    --   function()
-    --     vim.diagnostic.open_float({ border = "rounded" })
-    --   end,
-    --   "Floating diagnostic",
-    -- },
+    ["<leader>lf"] = {
+      function()
+        vim.diagnostic.open_float({ border = "rounded" })
+      end,
+      "Floating diagnostic",
+    },
+
+    ["<leader>ld"] = {
+function ()
+        vim.diagnostic.show()
+end
+    },
 
     ["[d"] = {
       function()
@@ -237,12 +243,12 @@ M.lspconfig = {
       "Goto next",
     },
 
-    -- ["<leader>q"] = {
-    --   function()
-    --     vim.diagnostic.setloclist()
-    --   end,
-    --   "Diagnostic setloclist",
-    -- },
+    ["<leader>lq"] = {
+      function()
+        vim.diagnostic.setloclist()
+      end,
+      "Diagnostic setloclist",
+    },
 
     ["<leader>lc"] = {
       function()
@@ -308,58 +314,6 @@ M.fold = {
     ["za"] = { "za", "Toogle Fold" },
     ["zO"] = { "zR", "Open All Folded Code" },
     ["zF"] = { "zM", "Fold Code" },
-  },
-}
-
-M.nvterm = {
-
-  t = {
-    -- toggle in terminal mode
-    ["<A-i>"] = {
-      function()
-        require("nvterm.terminal").toggle("float")
-      end,
-      "Toggle floating term",
-    },
-
-    ["<A-h>"] = {
-      function()
-        require("nvterm.terminal").toggle("horizontal")
-      end,
-      "Toggle horizontal term",
-    },
-
-    ["<A-v>"] = {
-      function()
-        require("nvterm.terminal").toggle("vertical")
-      end,
-      "Toggle vertical term",
-    },
-  },
-
-  n = {
-    -- toggle in normal mode
-    ["<A-i>"] = {
-      function()
-        require("nvterm.terminal").toggle("float")
-      end,
-      "Toggle floating term",
-    },
-
-    ["<A-h>"] = {
-      function()
-        require("nvterm.terminal").toggle("horizontal")
-      end,
-      "Toggle horizontal term",
-    },
-
-    ["<A-v>"] = {
-      function()
-        require("nvterm.terminal").toggle("vertical")
-      end,
-      "Toggle vertical term",
-    },
-
   },
 }
 

@@ -1,3 +1,4 @@
+
 # The syntax is "key = value". The whitespace around the
 # equals doesn't matter.
 background = 282c34
@@ -7,6 +8,13 @@ foreground = ffffff
 # Blank lines are ignored!
 
 keybind = ctrl+a=open_config
+keybind = super+c=open_config
+keybind = super+v=unbind
+keybind = super+a=unbind
+keybind = ctrl+v=unbind
+keybind = ctrl+a=unbind
+
+
 # Empty values reset the configuration to the default value
 font-size = 15
 font-family-bold = "Mononoki Nerd Font Mono"

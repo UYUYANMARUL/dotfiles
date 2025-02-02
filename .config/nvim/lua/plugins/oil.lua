@@ -13,15 +13,41 @@ return {
       require("oil").setup {
         columns = { "icon" },
         keymaps = {
-          ["<C-h>"] = false,
-          ["<C-l>"] = false,
-          ["<C-k>"] = false,
-          ["<C-j>"] = false,
+          ["<C-c>"] = {function ()
+            vim.cmd("bd!")
+          end},
+          ["<C-r>"] = "actions.refresh",
+          ["<C-h>"] = "actions.parent",
+          ["<C-l>"] = "actions.select",
+          ["<C-j>"] =  "",
+          ["<C-k>"] = "",
           ["<M-h>"] = "actions.select_split",
         },
+        delete_to_trash = true,
+        cleanup_delay_ms = 2000,
         win_options = {
           winbar = "%{v:lua.CustomOilBar()}",
         },
+  float = {
+    -- Padding around the floating window
+    padding = 0,
+    -- max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+    max_width = 0,
+    max_height = 0,
+    border = "none",
+    win_options = {
+      winblend = 0,
+    },
+    -- optionally override the oil buffers window title with custom function: fun(winid: integer): string
+    get_win_title = nil,
+    -- preview_split: Split direction: "auto", "left", "right", "above", "below".
+    preview_split = "auto",
+    -- This is the config that will be passed to nvim_open_win.
+    -- Change values here to customize the layout
+    override = function(conf)
+      return conf
+    end,
+  },
         view_options = {
           show_hidden = true,
           is_always_hidden = function(name, _)
@@ -31,7 +57,6 @@ return {
         },
       }
 
-      -- Open parent directory in current window
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
     end,
