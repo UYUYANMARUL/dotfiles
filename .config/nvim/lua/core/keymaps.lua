@@ -29,318 +29,274 @@ vim.keymap.set('i', '<right>', '<nop>')
 vim.keymap.set('n', '<left>', ':bp<cr>')
 vim.keymap.set('n', '<right>', ':bn<cr>')
 
--- use jk to exit insert mode
+
+
 local M = {}
 
+
 M.general = {
-  plugins = true,
-  i = {
-    -- go to  beginning and end
-    ["<C-b>"] = { "<ESC>^i", "Beginning of line" },
-    ["<C-e>"] = { "<End>", "End of line" },
-    ["<C-g>"] = { "<BS>", "Delete char in insert mode" },
-
-    -- navigate within insert mode
-    ["<C-h>"] = { "<Left>", "Move left" },
-
-    ["<C-l>"] = { "<Right>", "Move right" },
-    ["<C-j>"] = { "<Down>", "Move down" },
-    ["<C-k>"] = { "<Up>", "Move up" },
+  {
+    mode = { "i" },
+    { "<C-b>", "<ESC>^i", desc = "Beginning of line", nowait = true },
+    { "<C-e>", "<End>", desc = "End of line", nowait = true },
+    { "<C-g>", "<BS>", desc = "Delete char in insert mode", nowait = true },
+    { "<C-h>", "<Left>", desc = "Move left", nowait = true },
+    { "<C-l>", "<Right>", desc = "Move right", nowait = true },
+    { "<C-j>", "<Down>", desc = "Move down", nowait = true },
+    { "<C-k>", "<Up>", desc = "Move up", nowait = true },
   },
-
-  n = {
-    ["<Esc>"] = { ":noh <CR>", "Clear highlights" },
-
-    -- save
-    ["<leader>w"] = { "<cmd> w <CR>", "Save" },
-    -- close
-    ["<leader>q"] = { "<cmd> q <CR>", "Close" },
-    -- Copy all
-    ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
-
-    ["<leader>fm"] = {
-      function()
-        vim.lsp.buf.format({ async = true })
-      end,
-      "LSP formatting",
-    },
+  {
+    mode = { "n" },
+    { "<Esc>", ":noh <CR>", desc = "Clear highlights", nowait = true },
+    { "<leader>w", "<cmd> w <CR>", desc = "Save", nowait = true },
+    { "<leader>q", "<cmd> q <CR>", desc = "Close", nowait = true },
+    { "<C-c>", "<cmd> %y+ <CR>", desc = "Copy whole file", nowait = true },
+    { "<leader>fm", function() vim.lsp.buf.format({ async = true }) end, desc = "LSP formatting", nowait = true },
   },
-
-  t = {
-    ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
+  {
+    mode = { "t" },
+    { "<C-x>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), desc = "Escape terminal mode", nowait = true },
   },
-
-  v = {
-    ["<"] = { "<gv", "Indent line" },
-    [">"] = { ">gv", "Indent line" },
+  {
+    mode = { "v" },
+    { "<", "<gv", desc = "Indent line", nowait = true },
+    { ">", ">gv", desc = "Indent line", nowait = true },
   },
-
-  x = {
-    ["p"] = { 'p:let @+=@0<CR>:let @"=@0<CR>', "Dont copy replaced text", opts = { silent = true } },
+  {
+    mode = { "x" },
+    { "p", 'p:let @+=@0<CR>:let @"=@0<CR>', desc = "Dont copy replaced text", nowait = true  },
   },
 }
 
-M.tmux_navigator = {
-  n = {
-    ["<C-h>"] = { "<cmd><C-U>TmuxNavigateLeft<cr>" },
-    ["<C-j>"] = { "<cmd><C-U>TmuxNavigateDown<cr>" },
-    ["<C-k>"] = { "<cmd><C-U>TmuxNavigateUp<cr>" },
-    ["<C-l>"] = { "<cmd><C-U>TmuxNavigateRight<cr>" },
-    ["<C-\\>"] = { "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-  },
-}
+-- M.tmux_navigator = {
+ -- {
+   -- mode = { "n" },
+   -- { "<C-h>", "<cmd><C-U>TmuxNavigateLeft<cr>", desc = "Tmux Navigate Left", nowait = true },
+ --   { "<C-j>", "<cmd><C-U>TmuxNavigateDown<cr>", desc = "Tmux Navigate Down", nowait = true },
+ --   { "<C-k>", "<cmd><C-U>TmuxNavigateUp<cr>", desc = "Tmux Navigate Up", nowait = true },
+ --   { "<C-l>", "<cmd><C-U>TmuxNavigateRight<cr>", desc = "Tmux Navigate Right", nowait = true },
+ --   { "<C-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>", desc = "Tmux Navigate Previous", nowait = true },
+ -- },
+ --}
 
 M.harpoon = {
-  n = {
-    ["<leader>hm"] = { require('harpoon').add_file, "Mark file with harpoon" },
-
-    ["<leader>hn"] = { require('harpoon').nav_next, "Go to next harpoon mark" },
-
-    ["<leader>hp"] = { require('harpoon').nav_prev, "Go to previous harpoon mark" },
-
-    ["<leader>ha"] = { require('harpoon').toggle_quick_menu, "Show harpoon marks" },
+  {
+    mode = { "n" },
+    { "<leader>h", group = "harpoon" },
+    { "<leader>hm", require('harpoon').add_file, desc = "Mark file with harpoon", nowait = true },
+    { "<leader>hn", require('harpoon').nav_next, desc = "Go to next harpoon mark", nowait = true },
+    { "<leader>hp", require('harpoon').nav_prev, desc = "Go to previous harpoon mark", nowait = true },
+    { "<leader>ha", require('harpoon').toggle_quick_menu, desc = "Show harpoon marks", nowait = true },
   },
 }
 
 M.oil = {
-n = {
-    ["<leader>j"] = { require('oil').toggle_float, "Toogle Oil File Manager" },
-
-    ["-"] = { "<cmd>Oil<cr>", "Open Oil File Manager" },
+  {
+    mode = { "n" },
+    -- { "<leader>j", require('oil').toggle_float, desc = "Toogle Oil File Manager", nowait = true }, -- Uncomment if needed
   },
-
 }
 
 M.buffline = {
+  {
+    mode = { "n" },
+    {
 
-  n = {
-    ["<leader>bb"] = { "<cmd>BufferLineCyclePrev<CR>", "Previous" },
-
-    ["<leader>bn"] = { "<cmd>BufferLineCycleNext<CR>", "Next" },
-
-    ["<leader>bj"] = { "<cmd>BufferLineGoToBuffer<CR>", "jump" },
-
-    ["<leader>bh"] = { "<cmd>BufferLineCloseLeft<CR>", "Close all to the left" },
-
-    ["<leader>bl"] = { "<cmd>BufferLineCloseRight<CR>", "Close all to the right" },
-
-    ["<leader>be"] = { "<cmd>BufferLinePickClose<CR>", "No Highlight" },
-
-    ["<leader>bp"] = { "<cmd>BufferLinePick<CR>", "Pick Buffer" },
-
-    ["<leader>c"] = { "<cmd>BufferKill<CR>", "Close buffer" },
+    { "<leader>b", group = "Buffer" },
+    { "<leader>bb", "<cmd>BufferLineCyclePrev<CR>", desc = "Previous Buffer", nowait = true },
+    { "<leader>bn", "<cmd>BufferLineCycleNext<CR>", desc = "Next Buffer", nowait = true },
+    { "<leader>bj", "<cmd>BufferLineGoToBuffer<CR>", desc = "Jump to Buffer", nowait = true },
+    { "<leader>bh", "<cmd>BufferLineCloseLeft<CR>", desc = "Close all to the left", nowait = true },
+    { "<leader>bl", "<cmd>BufferLineCloseRight<CR>", desc = "Close all to the right", nowait = true },
+    { "<leader>be", "<cmd>BufferLinePickClose<CR>", desc = "No Highlight", nowait = true },
+    { "<leader>bp", "<cmd>BufferLinePick<CR>", desc = "Pick Buffer", nowait = true },
+  },
+    { "<leader>c", "<cmd>BufferKill<CR>", desc = "Close buffer", nowait = true },
   },
 }
 
 M.comment = {
-  n = {
-    ["<leader>/"] = {
+  {
+    mode = { "n" },
+    {
+      "<leader>/",
       function()
         require("Comment.api").toggle.linewise.current()
       end,
-      "Toggle comment",
+      desc = "Toggle comment", nowait = true,
     },
   },
-
-  v = {
-    ["<leader>/"] = {
+  {
+    mode = { "v" },
+    {
+      "<leader>/",
       "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-      "Toggle comment",
+      desc = "Toggle comment", nowait = true,
     },
   },
 }
 
 M.lspconfig = {
-  n = {
+  {
+    mode = { "n" },
+    {
 
-    ["gD"] = {
-      function()
-        vim.lsp.buf.declaration()
-      end,
-      "LSP declaration",
-    },
+    { "<leader>l", group = "lsp" },
+    { "<leader>la", function() vim.lsp.buf.code_action() end, desc = "LSP code action", nowait = true,mode={"n","v"} },
+    { "<leader>ls", function() vim.lsp.buf.signature_help() end, desc = "LSP signature help", nowait = true },
+    { "<leader>lf", function() vim.diagnostic.open_float({ border = "rounded" }) end, desc = "Floating diagnostic", nowait = true },
+    { "<leader>ld", function() vim.diagnostic.show() end, desc = "Show diagnostics", nowait = true },
+    { "<leader>lq", function() vim.diagnostic.setloclist() end, desc = "Diagnostic setloclist", nowait = true },
+    { "<leader>lc", function() vim.lsp.buf.add_workspace_folder() end, desc = "Add workspace folder", nowait = true },
+    { "<leader>lr", function() vim.lsp.buf.remove_workspace_folder() end, desc = "Remove workspace folder", nowait = true },
+    { "<leader>ll", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, desc = "List workspace folders", nowait = true },
 
-    ["gd"] = {
-      function()
-        vim.lsp.buf.definition()
-      end,
-      "LSP definition",
-    },
 
-    ["K"] = {
-      function()
-        vim.lsp.buf.hover()
-      end,
-      "LSP hover",
     },
-
-    ["gi"] = {
-      function()
-        vim.lsp.buf.implementation()
-      end,
-      "LSP implementation",
+    {
+      mode = {"n"},
+    { "g", group = "goto" },
+    { "gD", function() vim.lsp.buf.declaration() end, desc = "LSP declaration", nowait = true },
+    { "gd", function() vim.lsp.buf.definition() end, desc = "LSP definition", nowait = true },
+    { "gr", function() vim.lsp.buf.references() end, desc = "LSP references", nowait = true },
+    { "gi", function() vim.lsp.buf.implementation() end, desc = "LSP implementation", nowait = true },
     },
-
-    ["<leader>ls"] = {
-      function()
-        vim.lsp.buf.signature_help()
-      end,
-      "LSP signature help",
-    },
-
-    ["<leader>D"] = {
-      function()
-        vim.lsp.buf.type_definition()
-      end,
-      "LSP definition type",
-    },
-
-    ["<leader>ra"] = {
-      function()
-        require("nvchad.renamer").open()
-      end,
-      "LSP rename",
-    },
-
-    ["<leader>la"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
-
-    ["gr"] = {
-      function()
-        vim.lsp.buf.references()
-      end,
-      "LSP references",
-    },
-
-    ["<leader>lf"] = {
-      function()
-        vim.diagnostic.open_float({ border = "rounded" })
-      end,
-      "Floating diagnostic",
-    },
-
-    ["<leader>ld"] = {
-function ()
-        vim.diagnostic.show()
-end
-    },
-
-    ["[d"] = {
-      function()
-        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
-      end,
-      "Goto prev",
-    },
-
-    ["]d"] = {
-      function()
-        vim.diagnostic.goto_next({ float = { border = "rounded" } })
-      end,
-      "Goto next",
-    },
-
-    ["<leader>lq"] = {
-      function()
-        vim.diagnostic.setloclist()
-      end,
-      "Diagnostic setloclist",
-    },
-
-    ["<leader>lc"] = {
-      function()
-        vim.lsp.buf.add_workspace_folder()
-      end,
-      "Add workspace folder",
-    },
-
-    ["<leader>lr"] = {
-      function()
-        vim.lsp.buf.remove_workspace_folder()
-      end,
-      "Remove workspace folder",
-    },
-
-    ["<leader>ll"] = {
-      function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end,
-      "List workspace folders",
-    },
-  },
-
-  v = {
-    ["<leader>la"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
+    { "K", function() vim.lsp.buf.hover() end, desc = "LSP hover", nowait = true },
+    { "<leader>D", function() vim.lsp.buf.type_definition() end, desc = "LSP definition type", nowait = true },
+    { "<leader>ra", function() require("nvchad.renamer").open() end, desc = "LSP rename", nowait = true },
+    { "[d", function() vim.diagnostic.goto_prev({ float = { border = "rounded" } }) end, desc = "Goto prev diagnostic", nowait = true },
+    { "]d", function() vim.diagnostic.goto_next({ float = { border = "rounded" } }) end, desc = "Goto next diagnostic", nowait = true },
   },
 }
 
 M.nvimtree = {
-  n = {
-    -- toggle
-    ["<leader>e"] = { "<cmd> NvimTreeToggle <CR>", "Toggle nvimtree" },
+  {
+    mode = { "n" },
+    { "<leader>e", "<cmd> NvimTreeToggle <CR>", desc = "Toggle nvimtree", nowait = true },
   },
 }
 
 M.telescope = {
-
-  n = {
-    -- find
-    ["<leader>ff"] = { "<cmd> Telescope find_files <CR>", "Find files" },
-    ["<leader>fa"] = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "Find all" },
-    ["<leader>fw"] = { "<cmd> Telescope live_grep <CR>", "Live grep" },
-    ["<leader>fb"] = { "<cmd> Telescope buffers <CR>", "Find buffers" },
-    ["<leader>fh"] = { "<cmd> Telescope help_tags <CR>", "Help page" },
-    ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "Find oldfiles" },
-    ["<leader>fz"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" },
-    ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
-    ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
-    ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
-    ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
+  {
+    mode = { "n" },
+    {
+      "<leader>f",
+      group = "Find"
+    },
+    {
+      "<leader>ff",
+      "<cmd> Telescope find_files <CR>",
+      desc = "Find files",
+      nowait = true
+    },
+    {
+      "<leader>fa",
+      "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>",
+      desc = "Find all",
+      nowait = true
+    },
+    {
+      "<leader>fw",
+      "<cmd> Telescope live_grep <CR>",
+      desc = "Live grep",
+      nowait = true
+    },
+    {
+      "<leader>fb",
+      "<cmd> Telescope buffers <CR>",
+      desc = "Find buffers",
+      nowait = true
+    },
+    {
+      "<leader>fh",
+      "<cmd> Telescope help_tags <CR>",
+      desc = "Help page",
+      nowait = true
+    },
+    {
+      "<leader>fo",
+      "<cmd> Telescope oldfiles <CR>",
+      desc = "Find oldfiles",
+      nowait = true
+    },
+    {
+      "<leader>fz",
+      "<cmd> Telescope current_buffer_fuzzy_find <CR>",
+      desc = "Find in current buffer",
+      nowait = true
+    },
+    {
+      "<leader>g",
+      group = "Telescope Git"
+    },
+    {
+      "<leader>gc",
+      "<cmd> Telescope git_commits <CR>",
+      desc = "Git commits",
+      nowait = true
+    },
+    {
+      "<leader>gt",
+      "<cmd> Telescope git_status <CR>",
+      desc = "Git status",
+      nowait = true
+    },
+    {
+      "<leader>pt",
+      "<cmd> Telescope terms <CR>",
+      desc = "Pick hidden term",
+      nowait = true
+    },
+    {
+      "<leader>ma",
+      "<cmd> Telescope marks <CR>",
+      desc = "telescope bookmarks",
+      nowait = true
+    },
   },
 }
 
 M.fold = {
-  n = {
-    ["zo"] = { "<cmd>foldopen<CR>", "Open Folded Code" },
-    ["zf"] = { "<cmd>foldclose<CR>", "Fold Code" },
-    ["za"] = { "za", "Toogle Fold" },
-    ["zO"] = { "zR", "Open All Folded Code" },
-    ["zF"] = { "zM", "Fold Code" },
+  {
+    mode = { "n" },
+    { "zo", "<cmd>foldopen<CR>", desc = "Open Folded Code", nowait = true },
+    { "zf", "<cmd>foldclose<CR>", desc = "Fold Code", nowait = true },
+    { "za", "za", desc = "Toggle Fold", nowait = true },
+    { "zO", "zR", desc = "Open All Folded Code", nowait = true },
+    { "zF", "zM", desc = "Fold Code", nowait = true },
   },
 }
 
 M.whichkey = {
+  {
+    mode = { "n" },
+    {
+      "<leader>k", group = "Whichkey"
 
-  n = {
-    ["<leader>kK"] = {
+    },
+    {
+      "<leader>kK",
       function()
         vim.cmd("WhichKey")
       end,
-      "Which-key all keymaps",
+      desc = "Which-key all keymaps", nowait = true,
     },
-    ["<leader>kk"] = {
+    {
+      "<leader>kk",
       function()
         local input = vim.fn.input("WhichKey: ")
         vim.cmd("WhichKey " .. input)
       end,
-      "Which-key query lookup",
+      desc = "Which-key query lookup", nowait = true,
     },
   },
 }
 
 M.gitsigns = {
-
-  n = {
-    -- Navigation through hunks
-    ["]c"] = {
+  {
+    mode = { "n" },
+    {
+      "]c",
       function()
         if vim.wo.diff then
           return "]c"
@@ -350,11 +306,10 @@ M.gitsigns = {
         end)
         return "<Ignore>"
       end,
-      "Jump to next hunk",
-      opts = { expr = true },
+      desc = "Jump to next hunk", nowait = true,
     },
-
-    ["[c"] = {
+    {
+      "[c",
       function()
         if vim.wo.diff then
           return "[c"
@@ -364,76 +319,85 @@ M.gitsigns = {
         end)
         return "<Ignore>"
       end,
-      "Jump to prev hunk",
-      opts = { expr = true },
+      desc = "Jump to prev hunk", nowait = true ,
     },
-
-    -- Actions
-    ["<leader>rh"] = {
+    {
+      "<leader>rh",
       function()
         require("gitsigns").reset_hunk()
       end,
-      "Reset hunk",
+      desc = "Reset hunk", nowait = true,
     },
-
-    ["<leader>ph"] = {
+    {
+      "<leader>ph",
       function()
         require("gitsigns").preview_hunk()
       end,
-      "Preview hunk",
+      desc = "Preview hunk", nowait = true,
     },
-
-    ["<leader>gb"] = {
+    {
+      "<leader>gb",
       function()
         package.loaded.gitsigns.blame_line()
       end,
-      "Blame line",
+      desc = "Blame line", nowait = true,
     },
-
-    ["<leader>td"] = {
+    {
+      "<leader>td",
       function()
         require("gitsigns").toggle_deleted()
       end,
-      "Toggle deleted",
+      desc = "Toggle deleted", nowait = true,
     },
   },
 }
 
+
 M.dap = {
-  n = {
-    ["<leader>db"] = { "<cmd> DapToggleBreakpoint <CR>" },
-    ["<leader>dus"] = {
+  {
+    mode = { "n" },
+    { "<leader>db", "<cmd> DapToggleBreakpoint <CR>", desc = "Toggle Breakpoint", nowait = true },
+    {
+      "<leader>dus",
       function()
         local widgets = require("dap.ui.widgets")
         local sidebar = widgets.sidebar(widgets.scopes)
         sidebar.open()
       end,
-      "Open debugging sidebar",
+      desc = "Open debugging sidebar", nowait = true,
     },
   },
 }
 
 M.crates = {
-  n = {
-    ["<leader>rcu"] = {
+  {
+    mode = { "n" },
+    {
+      "<leader>rcu",
       function()
         require("crates").upgrade_all_crates()
       end,
-      "update crates",
+      desc = "Update crates", nowait = true,
     },
   },
 }
 
 M.floatterminal = {
-  n = {
-
-    ["<C-\\>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
-    ["<C-z>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
+  {
+    mode = { "n" },
+    { "<C-\\>", "<cmd> FloatermToggle <CR>", desc = "Open Floaterminal", nowait = true },
+    { "<C-z>", "<cmd> FloatermToggle <CR>", desc = "Open Floaterminal (alt)", nowait = true },
   },
-  t = {
-    ["<C-\\>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
-    ["<C-z>"] = { "<cmd> FloatermToggle <CR>", "Open Floaterminal" },
+  {
+    mode = { "t" },
+    { "<C-\\>", "<cmd> FloatermToggle <CR>", desc = "Open Floaterminal", nowait = true },
+    { "<C-z>", "<cmd> FloatermToggle <CR>", desc = "Open Floaterminal (alt)", nowait = true },
   },
 }
 
-return M
+
+local K = {}
+for _, value in pairs(M) do
+    table.insert(K, value)
+end
+return K

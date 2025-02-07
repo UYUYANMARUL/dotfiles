@@ -75,7 +75,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Aliases
 alias ls="lsd"
 alias cat="bat"
-alias vim='nvim'
 alias c='clear'
 
 # Shell integrations
@@ -101,6 +100,22 @@ if [[ -f "$HOME/.cargo/env" ]]; then
     source "$HOME/.cargo/env"
 fi
 
+
+# Function to set the passwords (requires sudo)
+setpass() {
+    export GITHUB_TOKEN=$(pass show github)
+    export SSHP_LINUX1=$(pass show ssh/linux1)
+    echo "passwords have been set."
+}
+
+# Function to delete the passwords
+deletepass() {
+    unset GITHUB_TOKEN
+    unset SSHP_LINUX1
+    echo "passwords have been deleted."
+}
+
+export EDITOR="nvim"
 export PATH="$PATH:$HOME/dotnet"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -121,3 +136,9 @@ export PATH="/opt/homebrew/opt/dotnet@6/bin:$PATH"
 export PATH="/opt/homebrew/opt/dotnet@6/bin:$PATH"
 export PATH="/opt/homebrew/opt/dotnet@8/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="Users/ataberkcekic/quickemu:$PATH"
+export PATH="$PATH:/Users/ataberkcekic/.foundry/bin"
+. "$HOME/.cargo/env"
+export PATH="$PATH:/Users/ataberkcekic/.aligned/bin"
